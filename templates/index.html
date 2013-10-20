@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+  <head>
+    <meta charset="utf-8">
+    <title>My AngularJS App</title>
+    <link rel="stylesheet" href="/static/css/app.css"/>
+    <link rel="stylesheet" href="/static/css/semantic.css"/>
+    <script src="/static/lib/jquery.js"></script>
+    <script src="/static/lib/semantic.js"></script>
+    
+  </head>
+  <body>
+    <div class="ui vertical inverted sidebar menu">
+      <!-- 1. Just : [ count, perpage, pagination ] -->
+      <a class="item"  href="#/basic">Basic</a>
+      <!-- 2. Extra: [ goto-page ] -->
+      <a class="item"  href="#/std">Standard</a>
+      <!-- 3. Extra: [ sortable ] -->
+      <a class="item"  href="#/sortable">Sortable Columns</a>
+      <!-- 4. Extra: [ hidden-columns ] -->
+      <a class="item"  href="#/hidden-cols">Hidden Columns</a>
+      <!-- 5. Extra: [ filter-by-form ] -->
+      <a class="item"  href="#/filter-by-form">Filter By Form</a>
+      <!-- 6. Extra: [ rows-selectable, rows-actions ] -->
+      <a class="item"  href="#/rows-selectable-actions">Rows Selectable & Actions</a>
+      <!-- 7. Extra: [ custom-render ] -->
+      <a class="item"  href="#/custom-render">Row Custom Render</a>
+      <!-- 8. Common: [ event-custom-handler ] -->
+      <a class="item" href="#/custom-event-handler">Custom Event Handler</a>
+      <!-- 9. Common: [ row-editable ] -->
+      <a class="item"  href="#/row-editable">Row Editable</a>
+    </div>
+
+    <div id="menu-btn" class="ui left floated black launch button">
+      <i class="list layout icon"></i> Menu
+    </div>
+
+    <div class="clear"> </div>
+    
+    <div class="">
+      <div ng-view></div>
+    </div>
+    
+    <script src="/static/lib/angular/angular.js"></script>
+    <script src="/static/js/app.js"></script>
+    <script src="/static/js/services.js"></script>
+    <script src="/static/js/controllers.js"></script>
+    <script src="/static/js/filters.js"></script>
+    <script src="/static/js/directives.js"></script>
+  </body>
+</html>
