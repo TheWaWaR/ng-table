@@ -63,13 +63,27 @@ angular.module('myApp.controllers', []).
 
       $('.active.loader').show();
       $http.get('/tbody.json', {params:{page:p}}).success(function(data){
-        $scope.rows = data.rows;
-        $scope.count = data.count;
-        $scope.page = data.page;
-        $scope.pages = data.pages;
-        $scope.patination = iterPages(data.page, data.pages);
+        if (data.status == 'success') {
+          $scope.rows = data.rows;
+          $scope.count = data.count;
+          $scope.page = data.page;
+          $scope.pages = data.pages;
+          $scope.patination = iterPages(data.page, data.pages);
+          $scope.errorMessage = '';
+          $('#error-message').hide();
+        } else {
+          console.log(data.message);
+          $('#error-message').text(data.message).show();
+        }
+        
         $('.active.loader').hide();
       });
     }
+
+    $('#goto-page').keypress(function(e){
+      if ( e.which == 13 ) {
+        $scope.loadPage($(this).val());
+      }
+    });
     $scope.loadPage(1);
   }]);

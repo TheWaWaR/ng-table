@@ -18,16 +18,15 @@
             <div class="ui grid">
               <div class="eight wide column">
                 <div class="ui label purple">{{rows.length}} / {{count}}</div>
+                <div id="error-message" class="ui label orange">{{ errorMessage }}</div>
                 <div class="ui active inline loader"></div>
               </div>
 
               <div class="eight wide column">
                 <div class="ui grid">
                   <div class="four wide column">
-                    <div class="ui small icon input">
-                      <input value="{{page}}" ng-keypress="loadPage(page)"
-                             type="text" placeholder="Page" />
-                      <i class="inverted play icon"></i>
+                    <div class="ui small input">
+                      <input id="goto-page" type="text" placeholder="Goto Page" />
                     </div>
                   </div>
                   

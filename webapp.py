@@ -27,19 +27,22 @@ def tbody():
 
     time.sleep(1.2)
     print 'page, perpage:', page, perpage
-    
+
     count = 345
-    records = [['%d~col-1-%d'%(page, i), 'col-2-%d'%i, 'col-3-%d'%i]  for i in range(count)]
     pages = (count+perpage-1) / perpage
-    page = 1 if page > pages or page < 1 else page
+    if page > pages or page < 1:
+        return json.dumps({'status': 'error', 'message': 'Page number invalid:  %d ' % page})
+        
+    records = [['%d~col-1-%d'%(page, i), 'col-2-%d'%i, 'col-3-%d'%i]  for i in range(count)]
     start, end = (page-1) * perpage, page*perpage
     rows = records[start:end]
     
     ret = {
-        'rows' : rows,
-        'count': count,
-        'page' : page,
-        'pages': pages
+        'status' : 'success',
+        'rows'   : rows,
+        'count'  : count,
+        'page'   : page,
+        'pages'  : pages
     }
     return json.dumps(ret)
 
