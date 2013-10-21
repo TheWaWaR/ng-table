@@ -1,0 +1,44 @@
+<div class="ui grid">
+  <div class="four wide column">
+  </div>
+
+  <div class="twelve wide column">
+    <table class="ui celled table segment">
+      <thead>
+        <th ng-repeat="k in heads.keys">
+          <button class="ui small button"
+                  ng-class="(k==order) && (orderDirection=='-' && 'blue' || 'orange') || ''"
+                  ng-click="orderBy(k)">{{ heads.dict[k] }}</button>
+        </th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="row in rows">
+          <td ng-repeat="col in row">{{col}}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="{{heads.length}}">
+            <div class="ui grid">
+              <div class="eight wide column">
+                <div class="ui label purple">{{rows.length}} / {{count}}</div>
+                {{ orderby }}
+                <div class="ui active inline loader"></div>
+              </div>
+
+              <div class="eight wide column">
+                <div class="pull-right ui pagination small menu">
+                  <a class="item" ng-click="loadPage({page:p})"
+                     ng-class="p==null && 'disabled' || (p==page && 'active' || '')"
+                     ng-repeat="p in patination">
+                    {{ p==null && '...' || p }}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

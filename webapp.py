@@ -16,7 +16,15 @@ def index():
 
 @app.route('/thead.json')
 def thead():
-    ret = ['Head1', 'Head2', 'Head3']
+    
+    ret = {
+        'keys': ['0', '1', '2'],
+        'dict': {
+            '0':'Head1',
+            '1':'Head2',
+            '2':'Head3'
+        }
+    }
     return json.dumps(ret)
     
 
@@ -24,6 +32,8 @@ def thead():
 def tbody():
     page = request.args.get('page', 1, type=int)
     perpage = request.args.get('perpage', 20)
+    order = request.args.get('order', '')
+    orderDirection = request.args.get('orderDirection', '')
 
     time.sleep(1.2)
     print 'page, perpage:', page, perpage
@@ -34,6 +44,15 @@ def tbody():
         return json.dumps({'status': 'error', 'message': 'Page number invalid:  %d ' % page})
         
     records = [['%d~col-1-%d'%(page, i), 'col-2-%d'%i, 'col-3-%d'%i]  for i in range(count)]
+    if order:
+        def cmp_up(idx):
+            return lambda x, y: 1 if x[idx] > y[idx] else -1
+        def cmp_down(idx):
+            return lambda x, y: 1 if x[idx] < y[idx] else -1
+        cmp_func = cmp_down if orderDirection == '-' else cmp_up
+        idx = int(order)
+        records.sort(cmp=cmp_func(idx))
+        
     start, end = (page-1) * perpage, page*perpage
     rows = records[start:end]
     

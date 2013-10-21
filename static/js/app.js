@@ -16,22 +16,22 @@ angular.module('myApp',
                          controller: 'SortableCtrl'});
     $routeProvider.when('/hidden-cols',
                         {templateUrl: '/static/partials/hidden-cols.html',
-                         controller: 'Hidden-ColsCtrl'});
+                         controller: 'HiddenColsCtrl'});
     $routeProvider.when('/filter-by-form',
                         {templateUrl: '/static/partials/filter-by-form.html',
-                         controller: 'Filter-By-FormCtrl'});
+                         controller: 'FilterByFormCtrl'});
     $routeProvider.when('/rows-selectable-actions',
                         {templateUrl: '/static/partials/rows-selectable-actions.html',
-                         controller: 'Rows-Selectable-ActionsCtrl'});
+                         controller: 'RowsSelectableActionsCtrl'});
     $routeProvider.when('/custom-render',
                         {templateUrl: '/static/partials/custom-render.html',
-                         controller: 'Custom-RenderCtrl'});
+                         controller: 'CustomRenderCtrl'});
     $routeProvider.when('/custom-event-handler',
                         {templateUrl: '/static/partials/custom-event-handler.html',
-                         controller: 'Custom-Event-HandlerCtrl'});
+                         controller: 'CustomEventHandlerCtrl'});
     $routeProvider.when('/row-editable',
                         {templateUrl: '/static/partials/row-editable.html',
-                         controller: 'Row-EditableCtrl'});  
+                         controller: 'RowEditableCtrl'});  
     $routeProvider.otherwise({redirectTo: '/basic'});
     
   }]);
