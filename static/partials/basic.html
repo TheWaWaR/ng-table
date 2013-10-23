@@ -1,11 +1,16 @@
 <div class="ui grid">
   <div class="four wide column">
+    <div class="ui segment orange inverted">
+      1. Just : [ count, perpage, pagination ]
+    </div>
   </div>
 
   <div class="twelve wide column">
     <table class="ui celled table segment">
       <thead>
-        <th ng-repeat="head in heads">{{head}}</th>
+        <th ng-repeat="k in heads.keys">
+           {{ heads.dict[k] }}
+        </th>
       </thead>
       <tbody>
         <tr ng-repeat="row in rows">
@@ -22,7 +27,7 @@
               </div>
 
               <div class="eight wide column">
-                <div class="pull-right ui pagination small menu">
+                <div class="floated right ui pagination small menu">
                   <a class="item" ng-click="loadPage(p)"
                      ng-class="p==null && 'disabled' || (p==page && 'active' || '')"
                      ng-repeat="p in patination">

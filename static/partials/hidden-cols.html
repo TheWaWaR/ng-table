@@ -1,20 +1,39 @@
 <div class="ui grid">
   <div class="four wide column">
+    <div class="ui segment orange inverted">
+      4. Extra: [ hidden-columns ]
+    </div>
   </div>
 
   <div class="twelve wide column">
+
+    <div class="ui selection dropdown">
+      <input type="hidden" name="gender">
+      <div class="default text">Gender</div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        <div class="item" ng-click="toggleVisible($index)" ng-repeat="k in heads.keys">
+          <div class="ui label" ng-class="visibleArr[k] && 'green' || '' ">{{heads.dict[k]}}</div>
+        </div>
+      </div>
+    </div>
+    
     <table class="ui celled table segment">
       <thead>
-        <th ng-repeat="head in heads">{{head}}</th>
+        <th ng-repeat="k in visibleItems(heads.keys)">
+           {{ heads.dict[k] }}
+        </th>
       </thead>
       <tbody>
         <tr ng-repeat="row in rows">
-          <td ng-repeat="col in row">{{col}}</td>
+          <td ng-repeat="col in visibleItems(row)">
+            {{col}}
+          </td>
         </tr>
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="{{heads.length}}">
+          <td colspan="{{heads.keys.length}}">
             <div class="ui grid">
               <div class="eight wide column">
                 <div class="ui label purple">{{rows.length}} / {{count}}</div>
@@ -23,7 +42,7 @@
 
               <div class="eight wide column">
                 <div class="pull-right ui pagination small menu">
-                  <a class="item" ng-click="loadPage(p)"
+                  <a class="item" ng-click="loadPage({page:p})"
                      ng-class="p==null && 'disabled' || (p==page && 'active' || '')"
                      ng-repeat="p in patination">
                     {{ p==null && '...' || p }}

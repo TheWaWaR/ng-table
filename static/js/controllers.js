@@ -30,8 +30,11 @@ function iterPages(current, total){
 }
 
 
-angular.module('myApp.controllers', []).
-  controller('BasicCtrl', ['$scope', '$http', function($scope, $http) {
+var myCtrls = angular.module('myApp.controllers', []);
+
+
+/** BasicCtrl **/
+myCtrls.controller('BasicCtrl', ['$scope', '$http', function($scope, $http) {
     $http.get('/thead.json').success(function(data) {
       $scope.heads = data;
     });
@@ -51,8 +54,13 @@ angular.module('myApp.controllers', []).
       });
     }
     $scope.loadPage(1);
-  }])                           // BasicCtrl
-  .controller('StdCtrl', ['$scope', '$http', function($scope, $http) {
+  }]);                           
+
+
+
+
+/** StdCtrl (Goto Page) **/
+myCtrls.controller('StdCtrl', ['$scope', '$http', function($scope, $http) {
         $http.get('/thead.json').success(function(data) {
       $scope.heads = data;
     });
@@ -86,8 +94,12 @@ angular.module('myApp.controllers', []).
       }
     });
     $scope.loadPage(1);
-  }])                           // StdCtrl (Goto Page)
-  .controller('SortableCtrl', ['$scope', '$http', function($scope, $http) {
+  }]);                           
+
+
+
+/** SortableCtrl **/
+myCtrls.controller('SortableCtrl', ['$scope', '$http', function($scope, $http) {
     $http.get('/thead.json').success(function(data) {
       $scope.heads = data;
     });
@@ -129,131 +141,92 @@ angular.module('myApp.controllers', []).
     
     $scope.loadPage({page:1});
     
-  }])                           // SortableCtrl
-  .controller('HiddenColsCtrl', ['$scope', '$http', function($scope, $http) {
-    $http.get('/thead.json').success(function(data) {
-      $scope.heads = data;
-    });
+  }]); 
 
-    $scope.loadPage = function(p) {
-      console.log('loadPage:', p);
-      if (p == null) return;
 
-      $('.active.loader').show();
-      $http.get('/tbody.json', {params:{page:p}}).success(function(data){
-        $scope.rows = data.rows;
-        $scope.count = data.count;
-        $scope.page = data.page;
-        $scope.pages = data.pages;
-        $scope.patination = iterPages(data.page, data.pages);
-        $('.active.loader').hide();
-      });
+
+/** HiddenColsCtrl **/
+myCtrls.controller('HiddenColsCtrl', ['$scope', '$http', function($scope, $http) {
+  // It's a bug!!!
+  $('.ui.dropdown').dropdown({
+    action: 'nothing',
+    onChange: function(value, text) {
+      console.log(value, text);
+    },
+  });
+   
+  
+  $http.get('/thead.json').success(function(data) {
+    $scope.heads = data;
+    var visibleArr = new Array(data.keys.length);
+    for(var i=0; i<data.keys.length; i++) {
+      visibleArr[i] = true;
     }
-    $scope.loadPage(1);
-  }])                           // HiddenColsCtrl
-  .controller('FilterByFormCtrl', ['$scope', '$http', function($scope, $http) {
-    $http.get('/thead.json').success(function(data) {
-      $scope.heads = data;
-    });
+    $scope.visibleArr = visibleArr;
+  });
 
-    $scope.loadPage = function(p) {
-      console.log('loadPage:', p);
-      if (p == null) return;
+  $scope.toggleVisible = function(idx) {
+    $scope.visibleArr[idx] = !($scope.visibleArr[idx]);
+  };
 
-      $('.active.loader').show();
-      $http.get('/tbody.json', {params:{page:p}}).success(function(data){
-        $scope.rows = data.rows;
-        $scope.count = data.count;
-        $scope.page = data.page;
-        $scope.pages = data.pages;
-        $scope.patination = iterPages(data.page, data.pages);
-        $('.active.loader').hide();
-      });
+
+  $scope.visibleItems = function(arr) {
+    if (typeof(arr) == 'undefined') return [];
+    var matched = [];
+    for(var i = 0; i < arr.length; i++) {
+      if ($scope.visibleArr[i]) {
+        matched.push(arr[i]);
+      }
     }
-    $scope.loadPage(1);
-  }])                           // FilterByFormCtrl
-  .controller('RowsSelectableActionsCtrl', ['$scope', '$http', function($scope, $http) {
-    $http.get('/thead.json').success(function(data) {
-      $scope.heads = data;
+    return matched;
+  }
+    
+  var defaultParams = {};
+  $scope.loadPage = function(params) {
+    if (params.page == null) return;
+
+    console.log('loadPage.BEGIN:', params, defaultParams);
+    $.extend(defaultParams, params);
+    console.log('loadPage.END:', defaultParams);
+    
+    $('.active.loader').show();
+    $http.get('/tbody.json', {params:defaultParams}).success(function(data){
+      $scope.rows = data.rows;
+      $scope.count = data.count;
+      $scope.page = data.page;
+      $scope.pages = data.pages;
+      $scope.patination = iterPages(data.page, data.pages);
+      $('.active.loader').hide();
     });
+  }
+  
+  $scope.loadPage({page:1});
+}]);                           
 
-    $scope.loadPage = function(p) {
-      console.log('loadPage:', p);
-      if (p == null) return;
 
-      $('.active.loader').show();
-      $http.get('/tbody.json', {params:{page:p}}).success(function(data){
-        $scope.rows = data.rows;
-        $scope.count = data.count;
-        $scope.page = data.page;
-        $scope.pages = data.pages;
-        $scope.patination = iterPages(data.page, data.pages);
-        $('.active.loader').hide();
-      });
-    }
-    $scope.loadPage(1);
-  }])                           // RowsSelectableActionsCtrl
-  .controller('CustomRenderCtrl', ['$scope', '$http', function($scope, $http) {
-    $http.get('/thead.json').success(function(data) {
-      $scope.heads = data;
-    });
+/** FilterByFormCtrl **/
+myCtrls.controller('FilterByFormCtrl', ['$scope', '$http', function($scope, $http) {
+}]);                           
 
-    $scope.loadPage = function(p) {
-      console.log('loadPage:', p);
-      if (p == null) return;
 
-      $('.active.loader').show();
-      $http.get('/tbody.json', {params:{page:p}}).success(function(data){
-        $scope.rows = data.rows;
-        $scope.count = data.count;
-        $scope.page = data.page;
-        $scope.pages = data.pages;
-        $scope.patination = iterPages(data.page, data.pages);
-        $('.active.loader').hide();
-      });
-    }
-    $scope.loadPage(1);
-  }])                           // CustomRenderCtrl
-  .controller('CustomEventHandlerCtrl', ['$scope', '$http', function($scope, $http) {
-    $http.get('/thead.json').success(function(data) {
-      $scope.heads = data;
-    });
+/** RowsSelectableActionsCtrl **/
+myCtrls.controller('RowsSelectableActionsCtrl', ['$scope', '$http', function($scope, $http) {
+  }]);                           
 
-    $scope.loadPage = function(p) {
-      console.log('loadPage:', p);
-      if (p == null) return;
 
-      $('.active.loader').show();
-      $http.get('/tbody.json', {params:{page:p}}).success(function(data){
-        $scope.rows = data.rows;
-        $scope.count = data.count;
-        $scope.page = data.page;
-        $scope.pages = data.pages;
-        $scope.patination = iterPages(data.page, data.pages);
-        $('.active.loader').hide();
-      });
-    }
-    $scope.loadPage(1);
-  }])                           // CustomEventHandlerCtrl
-  .controller('RowEditableCtrl', ['$scope', '$http', function($scope, $http) {
-    $http.get('/thead.json').success(function(data) {
-      $scope.heads = data;
-    });
+/** CustomRenderCtrl **/
+myCtrls.controller('CustomRenderCtrl', ['$scope', '$http', function($scope, $http) {
+  }]);                           
 
-    $scope.loadPage = function(p) {
-      console.log('loadPage:', p);
-      if (p == null) return;
 
-      $('.active.loader').show();
-      $http.get('/tbody.json', {params:{page:p}}).success(function(data){
-        $scope.rows = data.rows;
-        $scope.count = data.count;
-        $scope.page = data.page;
-        $scope.pages = data.pages;
-        $scope.patination = iterPages(data.page, data.pages);
-        $('.active.loader').hide();
-      });
-    }
-    $scope.loadPage(1);
-  }])                           // RowEditableCtrl
+
+/** CustomEventHandlerCtrl **/
+myCtrls.controller('CustomEventHandlerCtrl', ['$scope', '$http', function($scope, $http) {
+  }]);                           
+
+
+
+/** RowEditableCtrl **/
+myCtrls.controller('RowEditableCtrl', ['$scope', '$http', function($scope, $http) {
+  }]);                           
   

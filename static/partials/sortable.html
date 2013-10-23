@@ -1,5 +1,8 @@
 <div class="ui grid">
   <div class="four wide column">
+    <div class="ui segment orange inverted">
+      3. Extra: [ sortable ]
+    </div>
   </div>
 
   <div class="twelve wide column">
@@ -7,7 +10,7 @@
       <thead>
         <th ng-repeat="k in heads.keys">
           <button class="ui small button"
-                  ng-class="(k==order) && (orderDirection=='-' && 'blue' || 'orange') || ''"
+                  ng-class="(k==order) && (orderDirection=='-' && 'blue' || 'orange') || 'black'"
                   ng-click="orderBy(k)">{{ heads.dict[k] }}</button>
         </th>
       </thead>

@@ -1,3 +1,4 @@
+'use strict';
 
 
 /*************************** AngularJS ****************************/
@@ -42,12 +43,9 @@ angular.module('myApp',
 
 $('.menu.sidebar')
   .sidebar('attach events', '#menu-btn');
-//  .sidebar('setting', 'overlay', true)
 
 
-
-
-
+// $('.ui.modal').modal();
 
 
 
