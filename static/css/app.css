@@ -1,7 +1,7 @@
 
 .clear { clear:both; width:0; height:0;}
 
-.ui.inverted.orange.segment {
-    margin-top: 20px !important;
-}
+.ui.sidebar.menu { text-align: center; }
+
+.ui.inverted.orange.segment { margin-top: 20px !important; }
 

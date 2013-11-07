@@ -206,11 +206,80 @@ myCtrls.controller('HiddenColsCtrl', ['$scope', '$http', function($scope, $http)
 
 /** FilterByFormCtrl **/
 myCtrls.controller('FilterByFormCtrl', ['$scope', '$http', function($scope, $http) {
-}]);                           
+    var defaultParams = {};
+  
+  $('.ui.form').form();
+  $('.ui.submit').click(function(e){
+    e.preventDefault();
+    var params = {};
+    $('input[type="text"]').each(function(index, item){
+      var name = $(item).attr('name');
+      var value = $(item).val();
+      params[name] = value;
+    });
+    $.extend(defaultParams, params);
+    $scope.loadPage({page:1});    
+  });
+  
+  $('.ui.clear-form').click(function(e){
+    e.preventDefault();
+    $('input[type="text"]').each(function(index, item){
+      var name = $(item).attr('name');
+      $(item).val('');
+      delete defaultParams[name];
+    });
+    $scope.loadPage({page:1});    
+  });
+  
+    $scope.loadPage = function(params) {
+      if (params.page == null) return;
+
+      console.log('loadPage.BEGIN:', params, defaultParams);
+      $.extend(defaultParams, params);
+      console.log('loadPage.END:', defaultParams);
+      
+      $('.active.loader').show();
+      $http.get('/table.json', {params:defaultParams}).success(function(data){
+        $scope.rows = data.rows;
+        $scope.count = data.count;
+        $scope.page = data.page;
+        $scope.pages = data.pages;
+        $scope.patination = iterPages(data.page, data.pages);
+        $scope.heads = data.heads;
+        $scope.headDict = data.headDict;
+        $('.active.loader').hide();
+      });
+    }
+    
+    $scope.loadPage({page:1});
+}]);
 
 
 /** RowsSelectableActionsCtrl **/
 myCtrls.controller('RowsSelectableActionsCtrl', ['$scope', '$http', function($scope, $http) {
+    var defaultParams = {};
+
+    $scope.loadPage = function(params) {
+      if (params.page == null) return;
+
+      console.log('loadPage.BEGIN:', params, defaultParams);
+      $.extend(defaultParams, params);
+      console.log('loadPage.END:', defaultParams);
+      
+      $('.active.loader').show();
+      $http.get('/table.json', {params:defaultParams}).success(function(data){
+        $scope.rows = data.rows;
+        $scope.count = data.count;
+        $scope.page = data.page;
+        $scope.pages = data.pages;
+        $scope.patination = iterPages(data.page, data.pages);
+        $scope.heads = data.heads;
+        $scope.headDict = data.headDict;
+        $('.active.loader').hide();
+      });
+    }
+    
+    $scope.loadPage({page:1});
   }]);                           
 
 

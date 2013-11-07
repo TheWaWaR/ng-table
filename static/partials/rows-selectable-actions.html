@@ -1,11 +1,24 @@
 <div class="ui grid">
-  <div class="four wide column">
+  <div class="six wide column">
+    <div class="ui segment orange inverted">
+      <pre>      
+6. Extra: [ rows-selectable-actions ]
+      </pre>
+    </div>
   </div>
 
-  <div class="twelve wide column">
+  <div class="ten wide column">
+    <div class="">
+      <form method="GET" id="" action="">
+        <input type="" name="" value="" />
+      </form>
+    </div>
+    
     <table class="ui celled table segment">
       <thead>
-        <th ng-repeat="head in heads">{{head}}</th>
+        <th ng-repeat="k in heads">
+           {{ headDict[k] }}
+        </th>
       </thead>
       <tbody>
         <tr ng-repeat="row in rows">
@@ -22,8 +35,8 @@
               </div>
 
               <div class="eight wide column">
-                <div class="pull-right ui pagination small menu">
-                  <a class="item" ng-click="loadPage(p)"
+                <div class="floated right ui pagination small menu">
+                  <a class="item" ng-click="loadPage({page:p})"
                      ng-class="p==null && 'disabled' || (p==page && 'active' || '')"
                      ng-repeat="p in patination">
                     {{ p==null && '...' || p }}

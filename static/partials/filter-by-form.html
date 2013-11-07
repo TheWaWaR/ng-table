@@ -1,11 +1,44 @@
 <div class="ui grid">
-  <div class="four wide column">
+  <div class="six wide column">
+    <div class="ui segment orange inverted">
+      <pre>      
+5. Extra: [ filter-by-form ]
+      </pre>
+    </div>
   </div>
 
-  <div class="twelve wide column">
+  <div class="ten wide column">
+    <div class="ui segment">
+      <div class="ui form">
+        <div class="three fields">
+          <div class="field">
+            <input type="text" name="string" value="" placeholder="String" />
+          </div>
+          <div class="field">
+            <input type="text" name="int" value="" placeholder="Int" />
+          </div>
+          <div class="field">
+            <input type="text" name="boolean" value="" placeholder="Boolean" />
+          </div>
+        </div>
+        <div class="two fields">
+          <div class="field">
+            <input type="text" name="datetime-from" value="" placeholder="DateTime(from)" />
+          </div>
+          <div class="field">
+            <input type="text" name="datetime-to" value="" placeholder="DateTime(to)" />
+          </div>
+        </div>
+        <div class="ui blue submit button">Submit</div>
+        <div class="ui black clear-form button">Clear</div>
+      </form>
+    </div>
+    
     <table class="ui celled table segment">
       <thead>
-        <th ng-repeat="head in heads">{{head}}</th>
+        <th ng-repeat="k in heads">
+           {{ headDict[k] }}
+        </th>
       </thead>
       <tbody>
         <tr ng-repeat="row in rows">
@@ -22,8 +55,8 @@
               </div>
 
               <div class="eight wide column">
-                <div class="pull-right ui pagination small menu">
-                  <a class="item" ng-click="loadPage(p)"
+                <div class="floated right ui pagination small menu">
+                  <a class="item" ng-click="loadPage({page:p})"
                      ng-class="p==null && 'disabled' || (p==page && 'active' || '')"
                      ng-repeat="p in patination">
                     {{ p==null && '...' || p }}
